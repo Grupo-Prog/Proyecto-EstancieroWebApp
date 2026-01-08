@@ -1,14 +1,12 @@
 package com.estanciero.api.domain.entities.boxes;
 
 import com.estanciero.api.domain.entities.Player;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Entity
 @DiscriminatorValue("PROPERTY")
@@ -18,6 +16,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PropertyBox extends Box {
 
+    @Enumerated(EnumType.STRING)
+    private PropertyType propertyType;
     //provincia a la que pertenece
     private String provinceName;
 
@@ -26,6 +26,8 @@ public class PropertyBox extends Box {
     //precio de renta base
     private Double rentValue;
 
+
+    //de 0 a 4
     private Integer chacrasCount;
     private Boolean hasEstancia;
     //esta hipotecado?
