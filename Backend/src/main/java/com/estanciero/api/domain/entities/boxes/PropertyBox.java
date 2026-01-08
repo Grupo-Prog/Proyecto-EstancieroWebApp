@@ -26,12 +26,11 @@ public class PropertyBox extends Box {
     //precio de renta base
     private Double rentValue;
 
-
     //de 0 a 4
     private Integer chacrasCount;
-    private Boolean hasEstancia;
+    private Boolean hasEstancia = false;
     //esta hipotecado?
-    private Boolean isMortgage;
+    private Boolean isMortgage = false;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
