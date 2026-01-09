@@ -20,8 +20,6 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long currentTurnPlayerId;
-
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("position ASC")
     private List<Box> boxes = new ArrayList<>();
