@@ -1,7 +1,5 @@
-package com.estanciero.api.domain.entities.boxes;
+package com.estanciero.api.domain.entities;
 
-import com.estanciero.api.domain.entities.Board;
-import com.estanciero.api.domain.entities.Player;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +18,8 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Long currentTurnPlayerId;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Player> players = new ArrayList<>();
