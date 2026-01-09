@@ -1,5 +1,6 @@
 package com.estanciero.api.domain.entities;
 
+import com.estanciero.api.domain.entities.boxes.Game;
 import com.estanciero.api.domain.entities.boxes.PropertyBox;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,6 +25,11 @@ public class Player {
     private Double cash;
 
     private Integer position;
+
+
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    private Game game;
 
     @OneToMany(mappedBy = "owner")
     private List<PropertyBox> properties;
