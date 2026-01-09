@@ -2,10 +2,7 @@ package com.estanciero.api.domain.entities.boxes;
 
 import com.estanciero.api.domain.entities.Board;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "boxes")
@@ -15,6 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(onlyExplicitlyIncluded = true)
 public abstract class Box {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
