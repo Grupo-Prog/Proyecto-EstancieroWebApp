@@ -1,6 +1,7 @@
 package com.estanciero.api.model.entity.boxes;
 
 import com.estanciero.api.model.entity.Player;
+import com.estanciero.api.model.enums.PropertyType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
