@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserResponseDTO {
 
-    private int id;
+    private Long id;
 
     private String name;
 

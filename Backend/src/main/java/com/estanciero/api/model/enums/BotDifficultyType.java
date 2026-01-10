@@ -1,6 +1,6 @@
 package com.estanciero.api.model.enums;
 
-public enum BotDifficulty {
+public enum BotDifficultyType {
     EASY,
     MEDIUM,
     HARD

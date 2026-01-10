@@ -1,7 +1,7 @@
 package com.estanciero.api.model.entity;
 
 
-import com.estanciero.api.model.enums.BotDifficulty;
+import com.estanciero.api.model.enums.BotDifficultyType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,7 +18,7 @@ import lombok.*;
 public class Player_bot extends Player {
 
     @Enumerated(EnumType.STRING)
-    private BotDifficulty difficulty;
+    private BotDifficultyType difficulty;
 
 
 }

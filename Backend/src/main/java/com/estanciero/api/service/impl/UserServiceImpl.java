@@ -3,21 +3,37 @@ package com.estanciero.api.service.impl;
 import com.estanciero.api.dto.UserCreateRequestDTO;
 import com.estanciero.api.dto.UserResponseDTO;
 import com.estanciero.api.dto.UserUpdateRequestDTO;
+import com.estanciero.api.mapper.UserMapper;
+import com.estanciero.api.model.repository.UserRepository;
 import com.estanciero.api.service.UserService;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
+
 
     @Override
     public List<UserResponseDTO> findAll() {
-        return List.of();
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::toDTO)
+                .toList();
     }
 
     @Override
     public UserResponseDTO findById(long id) {
-        return null;
+        return userRepository.findById(id)
+                .map(userMapper::toDTO)
+                .orElse(null);
+
     }
 
     @Override

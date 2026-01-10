@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@DiscriminatorColumn(name = "PLAYER_TYPE")
+@DiscriminatorColumn(name = "PLAYER_TYPE", discriminatorType = DiscriminatorType.STRING)
 @ToString(onlyExplicitlyIncluded = true)
 public class Player {
     @Id
