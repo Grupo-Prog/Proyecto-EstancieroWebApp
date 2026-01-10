@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@DiscriminatorColumn(name = "PLAYER_TYPE")
 @ToString(onlyExplicitlyIncluded = true)
 public class Player {
     @Id
@@ -25,7 +26,6 @@ public class Player {
 
     private Integer position;
 
-
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
@@ -33,8 +33,5 @@ public class Player {
     @OneToMany(mappedBy = "owner")
     private List<PropertyBox> properties;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
 }
