@@ -1,4 +1,4 @@
-package com.estanciero.api.domain.entities;
+package com.estanciero.api.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

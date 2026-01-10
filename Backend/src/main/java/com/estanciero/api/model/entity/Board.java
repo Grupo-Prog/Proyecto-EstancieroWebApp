@@ -1,6 +1,6 @@
-package com.estanciero.api.domain.entities;
+package com.estanciero.api.model.entity;
 
-import com.estanciero.api.domain.entities.boxes.Box;
+import com.estanciero.api.model.entity.boxes.Box;
 import jakarta.persistence.*;
 import lombok.*;
 

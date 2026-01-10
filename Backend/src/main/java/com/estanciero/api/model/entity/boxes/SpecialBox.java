@@ -1,4 +1,4 @@
-package com.estanciero.api.domain.entities.boxes;
+package com.estanciero.api.model.entity.boxes;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

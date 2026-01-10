@@ -1,4 +1,4 @@
-package com.estanciero.api.domain.entities.boxes;
+package com.estanciero.api.model.entity.boxes;
 
 public enum PropertyType {
     PROVINCE,

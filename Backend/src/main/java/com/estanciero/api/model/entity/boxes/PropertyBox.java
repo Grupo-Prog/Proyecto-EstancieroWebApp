@@ -1,6 +1,6 @@
-package com.estanciero.api.domain.entities.boxes;
+package com.estanciero.api.model.entity.boxes;
 
-import com.estanciero.api.domain.entities.Player;
+import com.estanciero.api.model.entity.Player;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

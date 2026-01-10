@@ -1,6 +1,6 @@
-package com.estanciero.api.domain.entities;
+package com.estanciero.api.model.entity;
 
-import com.estanciero.api.domain.entities.boxes.PropertyBox;
+import com.estanciero.api.model.entity.boxes.PropertyBox;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,5 +32,9 @@ public class Player {
 
     @OneToMany(mappedBy = "owner")
     private List<PropertyBox> properties;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
