@@ -4,10 +4,12 @@ import com.estanciero.api.dto.UserCreateRequestDTO;
 import com.estanciero.api.dto.UserResponseDTO;
 import com.estanciero.api.dto.UserUpdateRequestDTO;
 import com.estanciero.api.mapper.UserMapper;
+import com.estanciero.api.model.entity.User;
 import com.estanciero.api.model.repository.UserRepository;
 import com.estanciero.api.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
@@ -38,26 +40,85 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO findByEmail(String email) {
-        return null;
+        return userRepository.findByEmail(email)
+                .map(userMapper::toDTO)
+                .orElse(null);
     }
 
     @Override
     public List<UserResponseDTO> findByName(String name) {
-        return List.of();
+        return userRepository.findByName(name)
+                .stream()
+                .map(userMapper::toDTO)
+                .toList();
     }
 
     @Override
     public UserResponseDTO create(UserCreateRequestDTO request) {
-        return null;
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException("El e-mail ya ha sido utilizado");
+        }
+        if (userRepository.existsByName(request.getName())) {
+            throw new IllegalArgumentException("El nombre ya ha sido utilizado");
+        }
+        if (request.getPassword().length() < 6) {
+            throw new IllegalArgumentException("La contraseña es demasiado corta");
+        }
+        if (request.getName().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede quedar vacío");
+        }
+        if (request.getEmail().isEmpty()) {
+            throw new IllegalArgumentException("El e-mail no puede quedar vacío");
+        }
+
+        User user = userMapper.toEntityCreate(request);
+
+        User createdUser = userRepository.save(user);
+
+        return userMapper.toDTO(createdUser);
+
     }
 
     @Override
     public UserResponseDTO update(long id, UserUpdateRequestDTO request) {
-        return null;
+
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isEmpty()) {
+            throw new IllegalArgumentException("El usuario no existe");
+        }
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException("El e-mail ya ha sido utilizado");
+        }
+        if (userRepository.existsByName(request.getName())) {
+            throw new IllegalArgumentException("El nombre ya ha sido utilizado");
+        }
+        if (request.getName().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede quedar vacío");
+        }
+        if (request.getEmail().isEmpty()) {
+            throw new IllegalArgumentException("El e-mail no puede quedar vacío");
+        }
+
+        User user = optionalUser.get();
+
+        userMapper.toEntityUpdate(user, request);
+
+        User updatedUser = userRepository.save(user);
+
+        return userMapper.toDTO(updatedUser);
     }
 
     @Override
     public void deleteById(long id) {
 
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("El usuario no existe");
+        }
+        userRepository.deleteById(id);
     }
+
+
+    // Opcional: crear método que haga validaciones para luego llamarlo y no escribirlo dos veces
+
 }
