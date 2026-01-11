@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Backend-SQL-Santi" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <envs>
+      <env name="DB_PASSWORD" value="123" />
+      <env name="DB_URL" value="jdbc:sqlserver://localhost:1433;databaseName=db_EstancieroAPI;encrypt=false" />
+      <env name="DB_USERNAME" value="Santiago" />
+    </envs>
+    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+    <module name="estanciero-api" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.estanciero.api.BackendApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
