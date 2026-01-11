@@ -1,4 +1,4 @@
-package com.estanciero.api.model.repository;
+package com.estanciero.api.repository;
 
 import com.estanciero.api.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

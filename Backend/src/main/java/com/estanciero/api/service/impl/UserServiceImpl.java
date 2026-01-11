@@ -5,12 +5,13 @@ import com.estanciero.api.dto.UserResponseDTO;
 import com.estanciero.api.dto.UserUpdateRequestDTO;
 import com.estanciero.api.mapper.UserMapper;
 import com.estanciero.api.model.entity.User;
-import com.estanciero.api.model.repository.UserRepository;
+import com.estanciero.api.repository.UserRepository;
 import com.estanciero.api.service.UserService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
