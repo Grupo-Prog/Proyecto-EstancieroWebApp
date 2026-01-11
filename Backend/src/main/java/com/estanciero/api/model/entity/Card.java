@@ -35,5 +35,5 @@ public class Card {
     private Integer value;
 
     //boolean para guardar la card
-    private boolean keepable;
+    private Boolean canBeKept;
 }
