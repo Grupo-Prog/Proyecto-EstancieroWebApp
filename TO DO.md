@@ -1,9 +1,21 @@
 
 ## Definición de Reglas y Lógica de Negocio
 
-* [ ] Definir mecánica de la prisión (determinar si será un estado lógico o una posición específica en el tablero).
-* [ ] Establecer condiciones de finalización de la partida (reglas de bancarrota, negociación y trueques).
-* [ ] Determinar fórmula para el cálculo de alquileres (costo base, por chacras, por estancia, por provincia completa).
+### Partida
+ * [ ] Establecer condiciones de finalización de la partida (reglas de bancarrota, negociación y trueques).
+ * [ ] Definir mecánica de la prisión (determinar si será un estado lógico o una posición específica en el tablero).
+
+
+---
+### Alquileres / Propiedades
+ * [ ] Determinar fórmula para el cálculo de alquileres (costo base, por chacras, por estancia, por provincia completa).
+ * [ ] Programar método para compra de propiedades.
+ * [ ] Implementar lógica de cobro y pago de alquileres (incluyendo cálculo según mejoras).
+ * [ ] Implementar sistema de hipotecas (constituir, levantar y bloquear cobro de alquiler).
+ * [ ] Desarrollar lógica de construcción de mejoras (validar posesión de provincia para chacras y conteo de chacras para estancias).
+ * [ ] Programar método para venta de propiedades.
+---
+
 
 ## Gestión de Datos y Base de Datos
 
@@ -25,14 +37,6 @@
 * [ ] Programar gestión de turnos (pasar turno y validar jugador actual).
 * [ ] Implementar mecánica de lanzamiento de dados (movimiento, detección de dobles y bonificación por pasar por la salida).
 * [ ] Desarrollar métodos para aplicar efectos de las tarjetas de suerte/destino.
-
-## Backend - Economía y Propiedades
-
-* [ ] Programar método para compra de propiedades.
-* [ ] Implementar lógica de cobro y pago de alquileres (incluyendo cálculo según mejoras).
-* [ ] Desarrollar lógica de construcción de mejoras (validar posesión de provincia para chacras y conteo de chacras para estancias).
-* [ ] Programar método para venta de propiedades.
-* [ ] Implementar sistema de hipotecas (constituir, levantar y bloquear cobro de alquiler).
 
 ## Backend - Inteligencia Artificial
 
