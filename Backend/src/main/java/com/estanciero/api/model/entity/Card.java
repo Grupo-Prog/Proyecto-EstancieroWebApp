@@ -32,7 +32,7 @@ public class Card {
     private CardEffectType effectType;
 
     // plata, cantidad de casillas
-    private Integer value;
+    private Integer amount;
 
     //boolean para guardar la card
     private Boolean canBeKept;
