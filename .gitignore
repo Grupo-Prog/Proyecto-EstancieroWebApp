@@ -47,6 +47,8 @@ build/
 *.iml
 *.ipr
 out/
+!.idea/runConfigurations/
+!.idea/runConfigurations/*.xml
 
 # --- ECLIPSE (IDE) ---
 .metadata
