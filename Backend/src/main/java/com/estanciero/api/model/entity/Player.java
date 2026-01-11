@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "players")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Getter
 @Setter
 @NoArgsConstructor

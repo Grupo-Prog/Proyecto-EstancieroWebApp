@@ -14,7 +14,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class Player_bot extends Player {
 
     @Enumerated(EnumType.STRING)
