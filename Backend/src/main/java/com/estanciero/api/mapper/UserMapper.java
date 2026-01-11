@@ -29,6 +29,7 @@ public class UserMapper {
     public User toEntityUpdate(User user, UserUpdateRequestDTO dto) {
         user.setName(dto.getName());
         user.setEmail(dto.getEmail());
+        return user;
     }
 
 }
