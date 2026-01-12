@@ -24,6 +24,8 @@ public interface UserService {
 
     void deleteById(long id);
 
+    UserResponseDTO login(String email, String password);
+
 
 
 }

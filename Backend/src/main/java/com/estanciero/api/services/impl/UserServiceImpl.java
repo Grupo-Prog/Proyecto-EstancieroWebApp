@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.estanciero.api.models.enums.UserStatusType.ACTIVE;
+import static com.estanciero.api.models.enums.UserStatusType.DELETED;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -26,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponseDTO> findAll() {
-        return userRepository.findAllByStatus(UserStatusType.ACTIVE)
+        return userRepository.findAllByStatus(ACTIVE)
                 .stream()
                 .map(userMapper::toDTO)
                 .toList();
@@ -34,20 +38,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserResponseDTO> findById(long id) {
-        return userRepository.findByIdAndStatus(id, UserStatusType.ACTIVE)
+        return userRepository.findByIdAndStatus(id, ACTIVE)
                 .map(userMapper::toDTO);
 
     }
 
     @Override
     public Optional<UserResponseDTO> findByEmail(String email) {
-        return userRepository.findByEmailAndStatus(email, UserStatusType.ACTIVE)
+        return userRepository.findByEmailAndStatus(email, ACTIVE)
                 .map(userMapper::toDTO);
     }
 
     @Override
     public List<UserResponseDTO> findByName(String name) {
-        return userRepository.findAllByNameAndStatus(name, UserStatusType.ACTIVE)
+        return userRepository.findAllByNameAndStatus(name, ACTIVE)
                 .stream()
                 .map(userMapper::toDTO)
                 .toList();
@@ -72,7 +76,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = userMapper.toEntityCreate(request);
-        user.setStatus(UserStatusType.ACTIVE);
+        user.setStatus(ACTIVE);
 
         User createdUser = userRepository.save(user);
 
@@ -84,7 +88,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO update(long id, UserUpdateRequestDTO request) {
 
         Optional<User> optionalUser =
-                userRepository.findByIdAndStatus(id, UserStatusType.ACTIVE);
+                userRepository.findByIdAndStatus(id, ACTIVE);
 
         if (optionalUser.isEmpty()) {
             throw new IllegalArgumentException("El usuario no existe");
@@ -117,15 +121,32 @@ public class UserServiceImpl implements UserService {
     public void deleteById(long id) {
 
         Optional<User> optionalUser =
-                userRepository.findByIdAndStatus(id, UserStatusType.ACTIVE);
+                userRepository.findByIdAndStatus(id, ACTIVE);
         if (optionalUser.isEmpty()) {
             throw new IllegalArgumentException("El usuario no existe");
         }
         User user = optionalUser.get();
-        user.setStatus(UserStatusType.DELETED);
+        user.setStatus(DELETED);
 
         userRepository.save(user);
     }
+
+    @Override
+    public UserResponseDTO login(String email, String password) {
+
+        Optional<User> optionalUser =
+                userRepository.findByEmailAndStatus(email, UserStatusType.ACTIVE);
+
+        if (optionalUser.isEmpty() || !optionalUser.get().getPassword().equals(password)) {
+            throw new IllegalArgumentException("Credenciales inválidas");
+        }
+
+        return userMapper.toDTO(optionalUser.get());
+    }
+
+
+
+
 
 
     // Opcional: crear método que haga validaciones para luego llamarlo y no escribirlo dos veces
