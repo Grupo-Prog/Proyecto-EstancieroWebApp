@@ -5,6 +5,7 @@ import com.estanciero.api.dtos.UserResponseDTO;
 import com.estanciero.api.dtos.UserUpdateRequestDTO;
 import com.estanciero.api.mappers.UserMapper;
 import com.estanciero.api.models.entities.User;
+import com.estanciero.api.models.enums.UserStatusType;
 import com.estanciero.api.repositories.UserRepository;
 import com.estanciero.api.services.UserService;
 import org.springframework.stereotype.Service;
@@ -25,30 +26,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponseDTO> findAll() {
-        return userRepository.findAll()
+        return userRepository.findAllByStatus(UserStatusType.ACTIVE)
                 .stream()
                 .map(userMapper::toDTO)
                 .toList();
     }
 
     @Override
-    public UserResponseDTO findById(long id) {
-        return userRepository.findById(id)
-                .map(userMapper::toDTO)
-                .orElse(null);
+    public Optional<UserResponseDTO> findById(long id) {
+        return userRepository.findByIdAndStatus(id, UserStatusType.ACTIVE)
+                .map(userMapper::toDTO);
 
     }
 
     @Override
-    public UserResponseDTO findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .map(userMapper::toDTO)
-                .orElse(null);
+    public Optional<UserResponseDTO> findByEmail(String email) {
+        return userRepository.findByEmailAndStatus(email, UserStatusType.ACTIVE)
+                .map(userMapper::toDTO);
     }
 
     @Override
     public List<UserResponseDTO> findByName(String name) {
-        return userRepository.findByName(name)
+        return userRepository.findAllByNameAndStatus(name, UserStatusType.ACTIVE)
                 .stream()
                 .map(userMapper::toDTO)
                 .toList();
@@ -73,6 +72,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = userMapper.toEntityCreate(request);
+        user.setStatus(UserStatusType.ACTIVE);
 
         User createdUser = userRepository.save(user);
 
@@ -83,16 +83,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO update(long id, UserUpdateRequestDTO request) {
 
-        Optional<User> optionalUser = userRepository.findById(id);
+        Optional<User> optionalUser =
+                userRepository.findByIdAndStatus(id, UserStatusType.ACTIVE);
 
         if (optionalUser.isEmpty()) {
             throw new IllegalArgumentException("El usuario no existe");
-        }
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("El e-mail ya ha sido utilizado");
-        }
-        if (userRepository.existsByName(request.getName())) {
-            throw new IllegalArgumentException("El nombre ya ha sido utilizado");
         }
         if (request.getName().isEmpty()) {
             throw new IllegalArgumentException("El nombre no puede quedar vacío");
@@ -102,6 +97,14 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = optionalUser.get();
+
+        if (!user.getEmail().equals(request.getEmail()) && userRepository.existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException("El e-mail ya ha sido utilizado");
+        }
+
+        if (!user.getName().equals(request.getName()) && userRepository.existsByName(request.getName())) {
+            throw new IllegalArgumentException("El nombre ya ha sido utilizado");
+        }
 
         userMapper.toEntityUpdate(user, request);
 
@@ -113,10 +116,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(long id) {
 
-        if (!userRepository.existsById(id)) {
+        Optional<User> optionalUser =
+                userRepository.findByIdAndStatus(id, UserStatusType.ACTIVE);
+        if (optionalUser.isEmpty()) {
             throw new IllegalArgumentException("El usuario no existe");
         }
-        userRepository.deleteById(id);
+        User user = optionalUser.get();
+        user.setStatus(UserStatusType.DELETED);
+
+        userRepository.save(user);
     }
 
 

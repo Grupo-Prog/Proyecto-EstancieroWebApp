@@ -1,6 +1,7 @@
 package com.estanciero.api.models.entities;
 
 
+import com.estanciero.api.models.enums.UserStatusType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,9 @@ public class User {
 
     @Column(nullable = false)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    public UserStatusType status;
 
     @Column(nullable = false)
     private String password;
