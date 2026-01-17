@@ -27,4 +27,7 @@ public class Board {
     @OneToOne()
     @JoinColumn(name = "game_id")
     private Game game;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Card> cards = new ArrayList<>();
 }

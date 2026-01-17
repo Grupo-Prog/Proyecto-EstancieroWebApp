@@ -34,5 +34,7 @@ public class Player {
     @OneToMany(mappedBy = "owner")
     private List<PropertyBox> properties;
 
-
+    @OneToOne
+    @JoinColumn(name = "card_kept_id")
+    private Card cardKept;
 }

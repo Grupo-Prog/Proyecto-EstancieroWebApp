@@ -31,9 +31,14 @@ public class Card {
     @Enumerated(EnumType.STRING)
     private CardEffectType effectType;
 
-    // plata, cantidad de casillas
+    // plata, mover x cantidad de casillas, ir hacia box_id
     private Integer amount;
 
     //boolean para guardar la card
+    @Column(name = "can_be_kept")
     private Boolean canBeKept;
+
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    private Board board;
 }
