@@ -36,7 +36,7 @@ public class Card {
 
     //boolean para guardar la card
     @Column(name = "can_be_kept")
-    private Boolean canBeKept;
+    private Boolean canBeKept = false;
 
     @ManyToOne
     @JoinColumn(name = "board_id")
