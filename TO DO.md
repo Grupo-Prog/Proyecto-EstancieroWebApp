@@ -19,9 +19,9 @@
 
 ## Gestión de Datos y Base de Datos
 
-* [ ] Desarrollar script de carga inicial para propiedades (provincias, compañías, estaciones).
-* [ ] Desarrollar script de carga inicial para tarjetas de suerte y destino (implementar al menos dos de cada tipo como prueba).
-* [ ] Establecer las relaciones de entidad para las tarjetas en el modelo de datos.
+* [x] Desarrollar script de carga inicial para boxes del tablero -> propiedades (provincias, compañías, estaciones).
+* [x] Desarrollar script de carga inicial para tarjetas de suerte y destino (implementar al menos dos de cada tipo como prueba).
+* [x] Establecer las relaciones de entidad para las tarjetas en el modelo de datos.
 
 ## Backend - Gestión de Usuarios y Autenticación
  
