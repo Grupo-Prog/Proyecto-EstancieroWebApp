@@ -1,6 +1,7 @@
 package com.estanciero.api.models.entities;
 
 import com.estanciero.api.models.entities.boxes.PropertyBox;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class Player {
 
     @ManyToOne
     @JoinColumn(name = "game_id")
+    @JsonIgnore
     private Game game;
 
     @OneToMany(mappedBy = "owner")

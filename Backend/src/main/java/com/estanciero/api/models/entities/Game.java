@@ -1,5 +1,6 @@
 package com.estanciero.api.models.entities;
 
+import com.estanciero.api.models.enums.GameStatusType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,4 +27,7 @@ public class Game {
 
     @OneToOne(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     private Board board;
+
+    @Enumerated(EnumType.STRING)
+    private GameStatusType statusType;
 }
