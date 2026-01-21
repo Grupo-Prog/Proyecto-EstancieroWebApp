@@ -3,6 +3,7 @@ package com.estanciero.api.controllers;
 import com.estanciero.api.dtos.GameRequestDTO;
 import com.estanciero.api.dtos.GameResponseDTO;
 import com.estanciero.api.models.entities.Game;
+import com.estanciero.api.models.enums.BotDifficultyType;
 import com.estanciero.api.services.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,6 +54,31 @@ public class GameController {
             Game game = gameService.joinGame(gameId, userId);
             return ResponseEntity.ok(game);
         } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{gameId}/addBot")
+    public ResponseEntity<Game> addBot(@PathVariable Long gameId, @RequestBody Map<String, String> request) {
+        if (gameId == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        try{
+            String difficulty = request.get("difficulty");
+            BotDifficultyType botDifficultyType = BotDifficultyType.valueOf(difficulty);
+            Game game = gameService.addBot(gameId, botDifficultyType);
+            return ResponseEntity.ok(game);
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{gameId}/removeBot/{botId}")
+    public ResponseEntity<Game> removeBot(@PathVariable Long gameId, @PathVariable Long botId){
+        try{
+            Game game = gameService.removeBot(gameId, botId);
+            return ResponseEntity.ok(game);
+        }catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
     }

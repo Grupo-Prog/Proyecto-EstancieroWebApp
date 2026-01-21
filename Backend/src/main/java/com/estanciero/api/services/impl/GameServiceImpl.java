@@ -1,8 +1,7 @@
 package com.estanciero.api.services.impl;
 
-import com.estanciero.api.dtos.*;
-import com.estanciero.api.mappers.UserMapper;
 import com.estanciero.api.models.entities.*;
+import com.estanciero.api.models.enums.BotDifficultyType;
 import com.estanciero.api.models.enums.GameStatusType;
 import com.estanciero.api.repositories.GameRepository;
 import com.estanciero.api.repositories.UserRepository;
@@ -103,6 +102,41 @@ public class GameServiceImpl implements GameService {
 
         game.getPlayers().add(player);
 
+        return gameRepo.save(game);
+    }
+
+    @Override
+    public Game addBot(Long gameId, BotDifficultyType botDifficultyTypes) {
+        Game game = gameRepo.findById(gameId).orElseThrow(() -> new IllegalArgumentException("Game not found"));
+        if (game.getPlayers().size() >= 6) {
+            throw new IllegalStateException("This lobby is full sorry");
+        }
+        Player_bot bot = new Player_bot();
+        bot.setGame(game);
+        bot.setCash(0.0);
+        bot.setPosition(0);
+        bot.setDifficulty(botDifficultyTypes);
+        bot.setProperties(new ArrayList<>());
+
+        game.getPlayers().add(bot);
+        return gameRepo.save(game);
+    }
+
+    @Override
+    public Game removeBot(Long gameId, Long playerId) {
+        Game game = gameRepo.findById(gameId).orElseThrow(() -> new IllegalArgumentException("Game not found"));
+        if (game.getStatusType() != GameStatusType.LOBBY) {
+            throw new IllegalStateException("Bots can only be removed in the lobby");
+        }
+
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            Player p = game.getPlayers().get(i);
+
+            if (p.getId().equals(playerId)){
+                game.getPlayers().remove(i);
+            }
+
+        }
         return gameRepo.save(game);
     }
 
