@@ -8,6 +8,8 @@ import com.estanciero.api.models.entities.User;
 import com.estanciero.api.models.enums.UserStatusType;
 import com.estanciero.api.repositories.UserRepository;
 import com.estanciero.api.services.UserService;
+import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -85,6 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResponseDTO update(long id, UserUpdateRequestDTO request) {
 
         Optional<User> optionalUser =
@@ -110,9 +113,9 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("El nombre ya ha sido utilizado");
         }
 
-        userMapper.toEntityUpdate(user, request);
 
-        User updatedUser = userRepository.save(user);
+        User updatedUser = userMapper.toEntityUpdate(user, request);
+        userRepository.save(updatedUser);
 
         return userMapper.toDTO(updatedUser);
     }
@@ -143,10 +146,6 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.toDTO(optionalUser.get());
     }
-
-
-
-
 
 
     // Opcional: crear método que haga validaciones para luego llamarlo y no escribirlo dos veces
