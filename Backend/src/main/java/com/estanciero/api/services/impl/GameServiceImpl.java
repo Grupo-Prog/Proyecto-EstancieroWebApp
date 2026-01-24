@@ -10,24 +10,19 @@ import com.estanciero.api.repositories.GameRepository;
 import com.estanciero.api.repositories.UserRepository;
 import com.estanciero.api.services.GameService;
 import com.estanciero.api.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 
 @Service
+@RequiredArgsConstructor
 public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepo;
     private final UserService userService;
     private final UserMapper userMapper;
-
-    public GameServiceImpl(GameRepository gameRepo, UserService userService ,
-                           UserMapper userMapper) {
-        this.gameRepo = gameRepo;
-        this.userService = userService;
-        this.userMapper = userMapper;
-    }
 
 
     @Override
