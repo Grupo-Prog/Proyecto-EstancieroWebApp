@@ -1,10 +1,10 @@
 package com.estanciero.api.controllers;
 
-import com.estanciero.api.dtos.GameRequestDTO;
-import com.estanciero.api.dtos.GameResponseDTO;
+
 import com.estanciero.api.models.entities.Game;
 import com.estanciero.api.models.enums.BotDifficultyType;
 import com.estanciero.api.services.GameService;
+import com.estanciero.api.services.LobbyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class GameController {
     private final GameService gameService;
+    private final LobbyService lobbyService;
 
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
@@ -37,7 +38,7 @@ public class GameController {
             return ResponseEntity.badRequest().build();
         }
         try {
-        Game game = gameService.createGame(userId);
+        Game game = lobbyService.createGame(userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(game);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();

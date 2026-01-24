@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface GameService {
 
-    Game createGame(Long userId);
+
 
     Game startGame(Long gameId);
 

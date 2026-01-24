@@ -22,32 +22,11 @@ public class GameServiceImpl implements GameService {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    public GameServiceImpl(GameRepository gameRepo, UserService userService , UserMapper userMapper) {
+    public GameServiceImpl(GameRepository gameRepo, UserService userService ,
+                           UserMapper userMapper) {
         this.gameRepo = gameRepo;
         this.userService = userService;
         this.userMapper = userMapper;
-    }
-
-
-    @Override
-    public Game createGame(Long userId) {
-        UserResponseDTO userResponseDTO = userService.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        User user = userMapper.toEntity(userResponseDTO);
-
-        Game game = new Game();
-        game.setStatusType(GameStatusType.LOBBY);
-        game.setPlayers(new ArrayList<>());
-
-        Player_human player = new Player_human();
-        player.setUser(user);
-        player.setGame(game);
-        player.setCash(0.0);
-        player.setPosition(0);
-        player.setProperties(new ArrayList<>());
-
-        game.getPlayers().add(player);
-
-        return gameRepo.save(game);
     }
 
     @Override
