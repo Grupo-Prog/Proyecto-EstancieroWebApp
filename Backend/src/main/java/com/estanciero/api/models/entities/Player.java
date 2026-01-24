@@ -5,7 +5,9 @@ import com.estanciero.api.models.enums.ColorType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +17,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @DiscriminatorColumn(name = "PLAYER_TYPE", discriminatorType = DiscriminatorType.STRING)
 @ToString(onlyExplicitlyIncluded = true)
 public class Player {
@@ -26,8 +28,10 @@ public class Player {
     @Enumerated(EnumType.STRING)
     private ColorType color;
 
+    @Builder.Default
     private Double cash = 0.0;
 
+    @Builder.Default
     private Integer position = 0;
 
     @ManyToOne
@@ -35,8 +39,9 @@ public class Player {
     @JsonIgnore
     private Game game;
 
+    @Builder.Default
     @OneToMany(mappedBy = "owner")
-    private List<PropertyBox> properties;
+    private List<PropertyBox> properties = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "card_kept_id")
