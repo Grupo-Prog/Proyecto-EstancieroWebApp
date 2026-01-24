@@ -32,4 +32,12 @@ public class UserMapper {
         return user;
     }
 
+    public User toEntity(UserResponseDTO dto) {
+        User user = new User();
+        user.setId(dto.getId());
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        return user;
+    }
+
 }

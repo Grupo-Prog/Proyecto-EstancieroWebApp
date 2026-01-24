@@ -1,7 +1,10 @@
 package com.estanciero.api.services.impl;
 
+import com.estanciero.api.dtos.UserResponseDTO;
+import com.estanciero.api.mappers.UserMapper;
 import com.estanciero.api.models.entities.*;
 import com.estanciero.api.models.enums.BotDifficultyType;
+import com.estanciero.api.models.enums.ColorType;
 import com.estanciero.api.models.enums.GameStatusType;
 import com.estanciero.api.repositories.GameRepository;
 import com.estanciero.api.repositories.UserRepository;
@@ -17,18 +20,19 @@ public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepo;
     private final UserService userService;
-    private final UserRepository userRepo;
+    private final UserMapper userMapper;
 
-    public GameServiceImpl(GameRepository gameRepo, UserService userService, UserRepository userRepo) {
+    public GameServiceImpl(GameRepository gameRepo, UserService userService , UserMapper userMapper) {
         this.gameRepo = gameRepo;
         this.userService = userService;
-        this.userRepo = userRepo;
+        this.userMapper = userMapper;
     }
 
 
     @Override
     public Game createGame(Long userId) {
-        User user = userRepo.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        UserResponseDTO userResponseDTO = userService.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        User user = userMapper.toEntity(userResponseDTO);
 
         Game game = new Game();
         game.setStatusType(GameStatusType.LOBBY);
@@ -58,11 +62,15 @@ public class GameServiceImpl implements GameService {
             throw new IllegalStateException("requires at least 2 players");
         }
 
-        //assignColors
-        // assignColors(List<Player> players)??
+        List<ColorType> colorsAvailable  = new ArrayList<>(Arrays.asList(ColorType.values()));
+        Collections.shuffle(colorsAvailable);
 
-        // Cash and position
         for (Player player : game.getPlayers()) {
+            if (player.getColor() == null) {
+                ColorType color = colorsAvailable.get(0);
+                player.setColor(color);
+                colorsAvailable.remove(0);
+            }
             player.setCash(35000.0);
             player.setPosition(1);
         }
@@ -83,7 +91,8 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game joinGame(Long gameId, Long userId) {
         Game game = gameRepo.findById(gameId).orElseThrow(() -> new IllegalArgumentException("Game not found"));
-        User user = userRepo.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        UserResponseDTO userResponseDTO = userService.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        User user = userMapper.toEntity(userResponseDTO);
 
         if (game.getStatusType() != GameStatusType.LOBBY) {
             throw new IllegalStateException("You can no longer join sorry");
@@ -156,9 +165,6 @@ public class GameServiceImpl implements GameService {
     }*/
 
     /*private void <assignColors(List<Player> players)> {
-        List<String> availableColors = new ArrayList<>(Arrays.asList(
-                "ROJO", "AZUL", "VERDE", "AMARILLO", "NARANJA", "VIOLETA"
-        ));
     }*/
 }
 

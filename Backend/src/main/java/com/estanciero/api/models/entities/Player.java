@@ -1,6 +1,7 @@
 package com.estanciero.api.models.entities;
 
 import com.estanciero.api.models.entities.boxes.PropertyBox;
+import com.estanciero.api.models.enums.ColorType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +23,8 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String color;
+    @Enumerated(EnumType.STRING)
+    private ColorType color;
 
     private Double cash;
 

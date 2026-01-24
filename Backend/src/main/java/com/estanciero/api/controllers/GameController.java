@@ -44,6 +44,16 @@ public class GameController {
         }
     }
 
+    @PostMapping("/{gameId}/start")
+    public ResponseEntity<Game> startGame(@PathVariable Long gameId) {
+        try {
+            Game game = gameService.startGame(gameId);
+            return ResponseEntity.ok(game);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("/{gameId}/join")
     public ResponseEntity<Game> joinGame(@PathVariable Long gameId,@RequestBody Map<String, Long> request) {
         Long userId = request.get("userId");
