@@ -2,9 +2,7 @@ package com.estanciero.api.models.entities;
 
 import com.estanciero.api.models.enums.GameStatusType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +11,9 @@ import java.util.List;
 @Table(name = "games")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @ToString(onlyExplicitlyIncluded = true)
 
 public class Game {
@@ -22,6 +23,7 @@ public class Game {
 
     private Long currentTurnPlayerId;
 
+    @Builder.Default
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Player> players = new ArrayList<>();
 
