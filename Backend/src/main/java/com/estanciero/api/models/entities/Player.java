@@ -26,9 +26,9 @@ public class Player {
     @Enumerated(EnumType.STRING)
     private ColorType color;
 
-    private Double cash;
+    private Double cash = 0.0;
 
-    private Integer position;
+    private Integer position = 0;
 
     @ManyToOne
     @JoinColumn(name = "game_id")
