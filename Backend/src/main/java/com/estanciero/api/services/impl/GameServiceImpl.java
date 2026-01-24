@@ -29,43 +29,6 @@ public class GameServiceImpl implements GameService {
         this.userMapper = userMapper;
     }
 
-    @Override
-    public Game startGame(Long gameId) {
-        Game game = gameRepo.findById(gameId).orElseThrow(() -> new IllegalArgumentException("Game not found"));
-
-        if (game.getStatusType() != GameStatusType.LOBBY) {
-            throw new IllegalStateException("you can no longer join sorry");
-        }
-
-        if (game.getPlayers().size() < 2) {
-            throw new IllegalStateException("requires at least 2 players");
-        }
-
-        List<ColorType> colorsAvailable  = new ArrayList<>(Arrays.asList(ColorType.values()));
-        Collections.shuffle(colorsAvailable);
-
-        for (Player player : game.getPlayers()) {
-            if (player.getColor() == null) {
-                ColorType color = colorsAvailable.get(0);
-                player.setColor(color);
-                colorsAvailable.remove(0);
-            }
-            player.setCash(35000.0);
-            player.setPosition(1);
-        }
-
-        // create board
-        /*Board board = createBoard(game);
-
-        // Determine first player
-        /*Player firstPlayer = determineFirstPlayer(game.getPlayers());?? */
-
-
-        // change state
-        game.setStatusType(GameStatusType.PLAYING);
-
-        return gameRepo.save(game);
-    }
 
     @Override
     public Game joinGame(Long gameId, Long userId) {

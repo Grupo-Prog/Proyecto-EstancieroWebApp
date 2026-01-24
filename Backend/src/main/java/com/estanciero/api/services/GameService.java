@@ -10,7 +10,7 @@ public interface GameService {
 
 
 
-    Game startGame(Long gameId);
+
 
     Game joinGame(Long gameId, Long userId);
 

@@ -48,7 +48,7 @@ public class GameController {
     @PostMapping("/{gameId}/start")
     public ResponseEntity<Game> startGame(@PathVariable Long gameId) {
         try {
-            Game game = gameService.startGame(gameId);
+            Game game = lobbyService.startGame(gameId);
             return ResponseEntity.ok(game);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
