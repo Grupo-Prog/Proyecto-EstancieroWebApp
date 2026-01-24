@@ -1,6 +1,7 @@
 package com.estanciero.api.services.impl;
 
 import com.estanciero.api.dtos.UserResponseDTO;
+import com.estanciero.api.factories.GameFactory;
 import com.estanciero.api.mappers.UserMapper;
 import com.estanciero.api.models.entities.Game;
 import com.estanciero.api.models.entities.Player;
@@ -22,30 +23,24 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class LobbyServiceImpl implements LobbyService {
 
     private final GameRepository gameRepo;
     private final UserService userService;
+
     private final UserMapper userMapper;
+    private final GameFactory gameFactory;
 
     @Override
-    @Transactional()
     public Game createGame(Long userId) {
         UserResponseDTO userResponseDTO = userService.findById(userId).orElseThrow(()
                 -> new IllegalArgumentException("User not found"));
+
         User user = userMapper.toEntity(userResponseDTO);
-
-        Game game = new Game();
-
-        game.setStatusType(GameStatusType.LOBBY);
-        game.setPlayers(new ArrayList<>());
-
-        Player_human player = new Player_human();
-        player.setUser(user);
-        player.setGame(game);
-
-        game.getPlayers().add(player);
-
+        //crear juego con host
+        var game = gameFactory.createGameWithHost(user);
+        //guardar
         return gameRepo.save(game);
     }
 
@@ -62,7 +57,7 @@ public class LobbyServiceImpl implements LobbyService {
             throw new IllegalStateException("requires at least 2 players");
         }
 
-        List<ColorType> colorsAvailable  = new ArrayList<>(Arrays.asList(ColorType.values()));
+        List<ColorType> colorsAvailable = new ArrayList<>(Arrays.asList(ColorType.values()));
         Collections.shuffle(colorsAvailable);
 
         for (Player player : game.getPlayers()) {
