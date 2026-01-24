@@ -6,6 +6,8 @@ import com.estanciero.api.models.entities.Player_human;
 import com.estanciero.api.models.entities.User;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 
 @Component
 public class PlayerFactory {
@@ -16,6 +18,7 @@ public class PlayerFactory {
                 .game(game)
                 .user(user)
                 .cash(INITIAL_CASH)
+                .properties(new ArrayList<>())
                 .build();
     }
 
