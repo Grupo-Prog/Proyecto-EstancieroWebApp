@@ -27,18 +27,14 @@ import java.util.List;
 public class LobbyServiceImpl implements LobbyService {
 
     private final GameRepository gameRepository;
-    private final UserService userService;
     private final UserRepository userRepository;
-
-    private final UserMapper userMapper;
     private final GameFactory gameFactory;
 
     @Override
     public Game createGame(Long userId) {
-        UserResponseDTO userResponseDTO = userService.findById(userId).orElseThrow(()
+        //verificar que existe el user
+        User user = userRepository.findById(userId).orElseThrow(()
                 -> new IllegalArgumentException("User not found"));
-
-        User user = userMapper.toEntity(userResponseDTO);
         //crear juego con host
         var game = gameFactory.createGameWithHost(user);
         //guardar
