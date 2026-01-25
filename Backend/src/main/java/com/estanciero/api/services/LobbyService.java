@@ -5,5 +5,5 @@ import com.estanciero.api.models.entities.Game;
 public interface LobbyService {
     Game createGame(Long userId);
 
-    
+
 }
