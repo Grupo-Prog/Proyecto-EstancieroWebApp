@@ -1,7 +1,5 @@
-package com.estanciero.api.dtos;
+package com.estanciero.api.dtos.game;
 import lombok.*;
-
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

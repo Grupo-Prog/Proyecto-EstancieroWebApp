@@ -1,7 +1,7 @@
-package com.estanciero.api.dtos;
+package com.estanciero.api.dtos.game;
 
-import com.estanciero.api.models.entities.Board;
-import com.estanciero.api.models.entities.Player;
+import com.estanciero.api.dtos.BoardResponseDTO;
+import com.estanciero.api.dtos.PlayerResponseDTO;
 import com.estanciero.api.models.enums.GameStatusType;
 import lombok.*;
 
