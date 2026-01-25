@@ -16,12 +16,9 @@
  * [ ] Programar método para venta de propiedades.
 ---
 
+## Backend - Refactorización de Código
 
-## Gestión de Datos y Base de Datos
-
-* [x] Desarrollar script de carga inicial para boxes del tablero -> propiedades (provincias, compañías, estaciones).
-* [x] Desarrollar script de carga inicial para tarjetas de suerte y destino (implementar al menos dos de cada tipo como prueba).
-* [x] Establecer las relaciones de entidad para las tarjetas en el modelo de datos.
+* [ ] Hacer DTOs para GameController (a algunos endpoints les vendria bien).
 
 ## Backend - Gestión de Usuarios y Autenticación
  
