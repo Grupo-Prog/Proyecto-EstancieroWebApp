@@ -62,7 +62,7 @@ public class GameController {
             return ResponseEntity.badRequest().build();
         }
         try {
-            Game game = gameService.joinGame(gameId, userId);
+            Game game = lobbyService.joinGame(gameId, userId);
             return ResponseEntity.ok(game);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
