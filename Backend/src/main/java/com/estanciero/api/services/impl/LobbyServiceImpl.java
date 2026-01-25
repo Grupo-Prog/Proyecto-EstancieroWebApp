@@ -5,11 +5,11 @@ import com.estanciero.api.factories.GameFactory;
 import com.estanciero.api.mappers.UserMapper;
 import com.estanciero.api.models.entities.Game;
 import com.estanciero.api.models.entities.Player;
-import com.estanciero.api.models.entities.Player_human;
 import com.estanciero.api.models.entities.User;
 import com.estanciero.api.models.enums.ColorType;
 import com.estanciero.api.models.enums.GameStatusType;
 import com.estanciero.api.repositories.GameRepository;
+import com.estanciero.api.repositories.UserRepository;
 import com.estanciero.api.services.LobbyService;
 import com.estanciero.api.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +26,9 @@ import java.util.List;
 @Transactional
 public class LobbyServiceImpl implements LobbyService {
 
-    private final GameRepository gameRepo;
+    private final GameRepository gameRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
 
     private final UserMapper userMapper;
     private final GameFactory gameFactory;
@@ -41,13 +42,13 @@ public class LobbyServiceImpl implements LobbyService {
         //crear juego con host
         var game = gameFactory.createGameWithHost(user);
         //guardar
-        return gameRepo.save(game);
+        return gameRepository.save(game);
     }
 
     @Override
     @Transactional
     public Game startGame(Long gameId) {
-        Game game = gameRepo.findById(gameId).orElseThrow(() -> new IllegalArgumentException("Game not found"));
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new IllegalArgumentException("Game not found"));
 
         if (game.getStatusType() != GameStatusType.LOBBY) {
             throw new IllegalStateException("you can no longer join sorry");
@@ -80,7 +81,7 @@ public class LobbyServiceImpl implements LobbyService {
         // change state
         game.setStatusType(GameStatusType.PLAYING);
 
-        return gameRepo.save(game);
+        return gameRepository.save(game);
     }
 
 }
