@@ -1,13 +1,11 @@
 package com.estanciero.api.services.impl;
 
-import com.estanciero.api.dtos.UserResponseDTO;
 import com.estanciero.api.factories.GameFactory;
 import com.estanciero.api.factories.PlayerFactory;
 import com.estanciero.api.models.entities.Game;
-import com.estanciero.api.models.entities.Player_human;
 import com.estanciero.api.models.entities.User;
 
-import com.estanciero.api.models.enums.GameStatusType;
+
 import com.estanciero.api.repositories.GameRepository;
 import com.estanciero.api.repositories.UserRepository;
 import com.estanciero.api.services.LobbyService;
@@ -15,8 +13,6 @@ import com.estanciero.api.services.LobbyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
 
 
 @Service
@@ -32,8 +28,7 @@ public class LobbyServiceImpl implements LobbyService {
     @Override
     public Game createGame(Long userId) {
         //verificar que existe el user
-        User user = userRepository.findById(userId).orElseThrow(()
-                -> new IllegalArgumentException("User not found"));
+        User user = findUserOrThrow(userId);
         //crear juego con host
         var game = gameFactory.createGameWithHost(user);
         //guardar
@@ -43,32 +38,28 @@ public class LobbyServiceImpl implements LobbyService {
 
     @Override
     public Game joinGame(Long gameId, Long userId) {
-        Game game = gameRepository.findById(gameId).orElseThrow(()
-                -> new IllegalArgumentException("Game not found"));
+        //verificar que existe el game
+        var game = findGameOrThrow(gameId);
+        //verificar que se puede unir
+        game.validateJoinability(userId);
 
-
-        if (game.getStatusType() != GameStatusType.LOBBY) {
-            throw new IllegalStateException("You can no longer join sorry");
-        }
-
-        if (game.getPlayers().size() >= 6) {
-            throw new IllegalStateException("This lobby is full");
-        }
-
-        //chequear si ya está dentro del game
-        boolean alreadyJoined = game.getPlayers().stream().anyMatch(p -> p.getId().equals(userId));
-        if (alreadyJoined) {
-            throw new IllegalStateException("You are already in this lobby");
-        }
-
-        User user = userRepository.findById(userId).orElseThrow(()
-                -> new IllegalArgumentException("User not found"));
+        User user = findUserOrThrow(userId);
 
         var player = playerFactory.createHumanPlayer(game, user);
+        //agregar el jugador
         game.getPlayers().add(player);
 
+        //guardar
         return gameRepository.save(game);
     }
 
+    private Game findGameOrThrow(Long gameId) {
+        return gameRepository.findById(gameId).orElseThrow(()
+                -> new IllegalArgumentException("Game not found"));
+    }
 
+    private User findUserOrThrow(Long userId) {
+        return userRepository.findById(userId).orElseThrow(()
+                -> new IllegalArgumentException("User not found"));
+    }
 }
