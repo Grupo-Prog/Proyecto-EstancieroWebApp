@@ -21,6 +21,10 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //campo que sirve para controlar la concurrencia
+    @Version
+    private Long version;
+
     private Long currentTurnPlayerId;
 
     @Builder.Default
