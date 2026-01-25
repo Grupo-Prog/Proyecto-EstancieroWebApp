@@ -1,10 +1,12 @@
 package com.estanciero.api.controllers;
 
 
+import com.estanciero.api.dtos.game.JoinGameDto;
 import com.estanciero.api.models.entities.Game;
 import com.estanciero.api.models.enums.BotDifficultyType;
 import com.estanciero.api.services.GameService;
 import com.estanciero.api.services.LobbyService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,12 +52,10 @@ public class GameController {
     }
 
     @PostMapping("/{gameId}/join")
-    public ResponseEntity<Game> joinGame(@PathVariable Long gameId, @RequestBody Map<String, Long> request) {
-        Long userId = request.get("userId");
-        if (userId == null) {
-            throw new IllegalArgumentException("User ID is required");
-        }
-        Game game = lobbyService.joinGame(gameId, userId);
+    public ResponseEntity<Game> joinGame(@PathVariable Long gameId,
+                                         @Valid @RequestBody JoinGameDto request) {
+
+        Game game = lobbyService.joinGame(gameId, request.userId());
         return ResponseEntity.ok(game);
     }
 
