@@ -43,9 +43,9 @@ public class LobbyServiceImpl implements LobbyService {
 
     @Override
     public Game joinGame(Long gameId, Long userId) {
-        Game game = gameRepository.findById(gameId).orElseThrow(() -> new IllegalArgumentException("Game not found"));
+        Game game = gameRepository.findById(gameId).orElseThrow(()
+                -> new IllegalArgumentException("Game not found"));
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         if (game.getStatusType() != GameStatusType.LOBBY) {
             throw new IllegalStateException("You can no longer join sorry");
@@ -54,6 +54,15 @@ public class LobbyServiceImpl implements LobbyService {
         if (game.getPlayers().size() >= 6) {
             throw new IllegalStateException("This lobby is full");
         }
+
+        //chequear si ya está dentro del game
+        boolean alreadyJoined = game.getPlayers().stream().anyMatch(p -> p.getId().equals(userId));
+        if (alreadyJoined) {
+            throw new IllegalStateException("You are already in this lobby");
+        }
+
+        User user = userRepository.findById(userId).orElseThrow(()
+                -> new IllegalArgumentException("User not found"));
 
         var player = playerFactory.createHumanPlayer(game, user);
         game.getPlayers().add(player);
