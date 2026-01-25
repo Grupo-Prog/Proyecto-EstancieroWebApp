@@ -38,8 +38,8 @@ public class GameController {
             return ResponseEntity.badRequest().build();
         }
         try {
-        Game game = lobbyService.createGame(userId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(game);
+            Game game = lobbyService.createGame(userId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(game);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
@@ -48,7 +48,7 @@ public class GameController {
     @PostMapping("/{gameId}/start")
     public ResponseEntity<Game> startGame(@PathVariable Long gameId) {
         try {
-            Game game = lobbyService.startGame(gameId);
+            Game game = gameService.startGame(gameId);
             return ResponseEntity.ok(game);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
@@ -56,7 +56,7 @@ public class GameController {
     }
 
     @PostMapping("/{gameId}/join")
-    public ResponseEntity<Game> joinGame(@PathVariable Long gameId,@RequestBody Map<String, Long> request) {
+    public ResponseEntity<Game> joinGame(@PathVariable Long gameId, @RequestBody Map<String, Long> request) {
         Long userId = request.get("userId");
         if (userId == null) {
             return ResponseEntity.badRequest().build();
@@ -74,22 +74,22 @@ public class GameController {
         if (gameId == null) {
             return ResponseEntity.badRequest().build();
         }
-        try{
+        try {
             String difficulty = request.get("difficulty");
             BotDifficultyType botDifficultyType = BotDifficultyType.valueOf(difficulty);
             Game game = gameService.addBot(gameId, botDifficultyType);
             return ResponseEntity.ok(game);
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{gameId}/removeBot/{botId}")
-    public ResponseEntity<Game> removeBot(@PathVariable Long gameId, @PathVariable Long botId){
-        try{
+    public ResponseEntity<Game> removeBot(@PathVariable Long gameId, @PathVariable Long botId) {
+        try {
             Game game = gameService.removeBot(gameId, botId);
             return ResponseEntity.ok(game);
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
     }
