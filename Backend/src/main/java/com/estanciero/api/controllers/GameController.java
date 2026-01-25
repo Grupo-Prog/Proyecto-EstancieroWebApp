@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/games")
@@ -22,75 +23,59 @@ public class GameController {
 
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
-        List<Game> games = gameService.findAll();
-        return ResponseEntity.ok(games);
+        return ResponseEntity.ok(gameService.findAll());
     }
 
     @GetMapping("/{gameId}")
     public ResponseEntity<Game> getGame(@PathVariable Long gameId) {
-        return gameService.findById(gameId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        Game game = gameService.findById(gameId).orElseThrow(()
+                -> new NoSuchElementException("Game ID not found: " + gameId));
+        return ResponseEntity.ok(game);
     }
 
     @PostMapping
     public ResponseEntity<Game> createGame(@RequestBody Map<String, Long> request) {
         Long userId = request.get("userId");
         if (userId == null) {
-            return ResponseEntity.badRequest().build();
+            throw new IllegalArgumentException("The userId is required");
         }
-        try {
-            Game game = lobbyService.createGame(userId);
-            return ResponseEntity.status(HttpStatus.CREATED).body(game);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Game game = lobbyService.createGame(userId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(game);
     }
 
     @PostMapping("/{gameId}/start")
     public ResponseEntity<Game> startGame(@PathVariable Long gameId) {
-        try {
-            Game game = gameService.startGame(gameId);
-            return ResponseEntity.ok(game);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Game game = gameService.startGame(gameId);
+        return ResponseEntity.ok(game);
     }
 
     @PostMapping("/{gameId}/join")
     public ResponseEntity<Game> joinGame(@PathVariable Long gameId, @RequestBody Map<String, Long> request) {
         Long userId = request.get("userId");
         if (userId == null) {
-            return ResponseEntity.badRequest().build();
+            throw new IllegalArgumentException("User ID is required");
         }
-        try {
-            Game game = lobbyService.joinGame(gameId, userId);
-            return ResponseEntity.ok(game);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Game game = lobbyService.joinGame(gameId, userId);
+        return ResponseEntity.ok(game);
     }
 
     @PostMapping("/{gameId}/addBot")
     public ResponseEntity<Game> addBot(@PathVariable Long gameId, @RequestBody Map<String, String> request) {
-        if (gameId == null) {
-            return ResponseEntity.badRequest().build();
+
+        String difficulty = request.get("difficulty");
+        if (difficulty == null) {
+            throw new IllegalArgumentException("Difficulty is required");
         }
-        try {
-            String difficulty = request.get("difficulty");
-            BotDifficultyType botDifficultyType = BotDifficultyType.valueOf(difficulty);
-            Game game = gameService.addBot(gameId, botDifficultyType);
-            return ResponseEntity.ok(game);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+
+        BotDifficultyType botDifficultyType = BotDifficultyType.valueOf(difficulty);
+        Game game = gameService.addBot(gameId, botDifficultyType);
+
+        return ResponseEntity.ok(game);
     }
 
     @PutMapping("/{gameId}/removeBot/{botId}")
     public ResponseEntity<Game> removeBot(@PathVariable Long gameId, @PathVariable Long botId) {
-        try {
-            Game game = gameService.removeBot(gameId, botId);
-            return ResponseEntity.ok(game);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Game game = gameService.removeBot(gameId, botId);
+        return ResponseEntity.ok(game);
     }
 }
