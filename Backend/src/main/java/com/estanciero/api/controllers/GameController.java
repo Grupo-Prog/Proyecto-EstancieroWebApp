@@ -1,6 +1,7 @@
 package com.estanciero.api.controllers;
 
 
+import com.estanciero.api.dtos.game.CreateGameDTO;
 import com.estanciero.api.dtos.game.JoinGameDto;
 import com.estanciero.api.models.entities.Game;
 import com.estanciero.api.models.enums.BotDifficultyType;
@@ -36,12 +37,9 @@ public class GameController {
     }
 
     @PostMapping
-    public ResponseEntity<Game> createGame(@RequestBody Map<String, Long> request) {
-        Long userId = request.get("userId");
-        if (userId == null) {
-            throw new IllegalArgumentException("The userId is required");
-        }
-        Game game = lobbyService.createGame(userId);
+    public ResponseEntity<Game> createGame(@Valid @RequestBody CreateGameDTO request) {
+
+        Game game = lobbyService.createGame(request.hostUserId());
         return ResponseEntity.status(HttpStatus.CREATED).body(game);
     }
 
