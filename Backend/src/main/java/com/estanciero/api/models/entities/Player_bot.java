@@ -2,11 +2,9 @@ package com.estanciero.api.models.entities;
 
 
 import com.estanciero.api.models.enums.BotDifficultyType;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @DiscriminatorValue("BOT")
@@ -14,8 +12,12 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @ToString(onlyExplicitlyIncluded = true)
 public class Player_bot extends Player {
+
+    @Column(name = "bot_name")
+    private String name;
 
     @Enumerated(EnumType.STRING)
     private BotDifficultyType difficulty;
@@ -23,8 +25,7 @@ public class Player_bot extends Player {
 
     @Override
     public String getName() {
-        //podríamos inventar un pool de nombres falsos para los bots
-        return "John Doe";
+        return this.name;
     }
 
     @Override
