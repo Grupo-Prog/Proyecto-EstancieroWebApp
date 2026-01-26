@@ -1,5 +1,8 @@
 package com.estanciero.api.models.entities;
 
+import com.estanciero.api.exceptions.domain.GameAlreadyStartedException;
+import com.estanciero.api.exceptions.domain.GameFullException;
+import com.estanciero.api.exceptions.domain.UserAlreadyJoined;
 import com.estanciero.api.models.enums.GameStatusType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -50,16 +53,13 @@ public class Game {
     public void validateJoinability(Long userId) {
         //chequear que no haya comenzado
         if (this.statusType != GameStatusType.LOBBY) {
-            throw new IllegalArgumentException("The game is not in lobby");
+            throw new GameAlreadyStartedException();
         }
         //chequear que tenga lugar
         if (this.players.size() >= MAX_PLAYERS) {
-            throw new IllegalStateException("The game is full");
+            throw new GameFullException(this.id);
         }
         //chequear que el usuario no ingresó todavía
-        boolean alreadyJoined = this.players.stream().anyMatch(p -> p.getId().equals(userId));
-        if (alreadyJoined) {
-            throw new IllegalStateException("The user is already in this lobby");
-        }
+
     }
 }
