@@ -42,13 +42,10 @@ public class LobbyServiceImpl implements LobbyService {
         var game = findGameOrThrow(gameId);
         //verificar que se puede unir
         game.validateJoinability(userId);
-
         User user = findUserOrThrow(userId);
-
         var player = playerFactory.createHumanPlayer(game, user);
         //agregar el jugador
         game.getPlayers().add(player);
-
         //guardar
         return gameRepository.save(game);
     }
