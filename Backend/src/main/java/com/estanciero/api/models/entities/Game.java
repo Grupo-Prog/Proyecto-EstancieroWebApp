@@ -59,7 +59,15 @@ public class Game {
         if (this.players.size() >= MAX_PLAYERS) {
             throw new GameFullException(this.id);
         }
-        //chequear que el usuario no ingresó todavía
 
+        //chequear que si algún player le pertenece ya al usuario
+        var existingPlayerOpt = this.players.stream()
+                .filter(p -> p.isUser(userId))
+                .findFirst();
+        
+        if (existingPlayerOpt.isPresent()) {
+            String userName = existingPlayerOpt.get().getName();
+            throw new UserAlreadyJoined(userName);
+        }
     }
 }
