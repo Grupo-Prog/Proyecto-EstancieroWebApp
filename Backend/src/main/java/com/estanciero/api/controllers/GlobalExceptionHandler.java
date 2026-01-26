@@ -1,6 +1,8 @@
 package com.estanciero.api.controllers;
 
 import com.estanciero.api.dtos.common.ErrorApi;
+import com.estanciero.api.exceptions.domain.DomainException;
+import lombok.val;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,6 +67,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorApi> handleIllegalArgument(IllegalArgumentException ex) {
         ErrorApi error = buildError(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    //excepciones de dominio
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<ErrorApi> handleDomainException(DomainException ex) {
+        ErrorApi error = buildError(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
