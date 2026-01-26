@@ -21,4 +21,14 @@ public class Player_bot extends Player {
     private BotDifficultyType difficulty;
 
 
+    @Override
+    public String getName() {
+        //podríamos inventar un pool de nombres falsos para los bots
+        return "John Doe";
+    }
+
+    @Override
+    public boolean isUser(Long userId) {
+        return false;
+    }
 }

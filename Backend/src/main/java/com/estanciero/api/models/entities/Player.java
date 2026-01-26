@@ -20,7 +20,7 @@ import java.util.List;
 @SuperBuilder
 @DiscriminatorColumn(name = "PLAYER_TYPE", discriminatorType = DiscriminatorType.STRING)
 @ToString(onlyExplicitlyIncluded = true)
-public class Player {
+public abstract class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,6 +33,18 @@ public class Player {
 
     @Builder.Default
     private Integer position = 0;
+
+    /**
+     * Metodo abstracto para obtener el nombre de un jugador
+     *
+     * @return nombre del usuario o un nombre random si es un bot
+     */
+    public abstract String getName();
+
+    /**
+     * Metodo abstracto para validar que el jugador le pertenece a un usuario
+     */
+    public abstract boolean isUser(Long userId);
 
     @ManyToOne
     @JoinColumn(name = "game_id")

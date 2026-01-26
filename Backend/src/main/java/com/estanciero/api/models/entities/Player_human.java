@@ -21,4 +21,13 @@ public class Player_human extends Player {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Override
+    public String getName() {
+        return this.user.getName();
+    }
+
+    @Override
+    public boolean isUser(Long userId) {
+        return this.user.getId().equals(userId);
+    }
 }
