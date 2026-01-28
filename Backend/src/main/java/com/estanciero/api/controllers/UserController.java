@@ -1,5 +1,6 @@
 package com.estanciero.api.controllers;
 import com.estanciero.api.dtos.UserCreateRequestDTO;
+import com.estanciero.api.dtos.UserLoginRequestDTO;
 import com.estanciero.api.dtos.UserResponseDTO;
 import com.estanciero.api.dtos.UserUpdateRequestDTO;
 import com.estanciero.api.services.UserService;
@@ -15,7 +16,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -26,7 +26,6 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll());
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> findById(@PathVariable long id) {
         UserResponseDTO user = userService.findById(id)
@@ -34,14 +33,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-
     @GetMapping("/email/{email}")
     public ResponseEntity<UserResponseDTO> findByEmail(@PathVariable String email) {
         UserResponseDTO user = userService.findByEmail(email)
                 .orElseThrow(() -> new NoSuchElementException("User email not found"));
         return ResponseEntity.ok(user);
     }
-
 
     @GetMapping("/name/{name}")
     public ResponseEntity<List<UserResponseDTO>> findByName(@PathVariable String name) {
@@ -53,6 +50,12 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> create(@RequestBody UserCreateRequestDTO request) {
         UserResponseDTO created = userService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserResponseDTO> login(@RequestBody UserLoginRequestDTO request) {
+        UserResponseDTO user = userService.login(request.getEmail(), request.getPassword());
+        return ResponseEntity.ok(user);
     }
 
     // PUT
