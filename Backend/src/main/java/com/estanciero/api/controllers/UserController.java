@@ -8,86 +8,64 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
 
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
-        try {
-            return ResponseEntity.ok(userService.findAll());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error searching for all users");
-        }
+    public ResponseEntity<List<UserResponseDTO>> findAll() {
+        return ResponseEntity.ok(userService.findAll());
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable long id) {
-        try {
-            Optional<UserResponseDTO> user = userService.findById(id);
-            return ResponseEntity.ok(user);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error searching for user");
-        }
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable long id) {
+        UserResponseDTO user = userService.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+        return ResponseEntity.ok(user);
     }
 
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<?> findByEmail(@PathVariable String email) {
-        try {
-            return ResponseEntity.ok(userService.findByEmail(email));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error searching for user by email");
-        }
+    public ResponseEntity<UserResponseDTO> findByEmail(@PathVariable String email) {
+        UserResponseDTO user = userService.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException("User email not found"));
+        return ResponseEntity.ok(user);
     }
 
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<?> findByName(@PathVariable String name) {
-        try {
-            return ResponseEntity.ok(userService.findByName(name));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error searching for users by name");
-        }
+    public ResponseEntity<List<UserResponseDTO>> findByName(@PathVariable String name) {
+        return ResponseEntity.ok(userService.findByName(name));
     }
 
     // POST
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody UserCreateRequestDTO request) {
-        try {
-            UserResponseDTO created = userService.create(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body(created);
-        }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating user");
-        }
+    public ResponseEntity<UserResponseDTO> create(@RequestBody UserCreateRequestDTO request) {
+        UserResponseDTO created = userService.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     // PUT
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable long id, @RequestBody UserUpdateRequestDTO request) {
-        try {
-            UserResponseDTO updated = userService.update(id, request);
-            return ResponseEntity.ok(updated);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating the user");
-        }
+    public ResponseEntity<UserResponseDTO> update(@PathVariable long id, @RequestBody UserUpdateRequestDTO request) {
+        UserResponseDTO updated = userService.update(id, request);
+        return ResponseEntity.ok(updated);
     }
 
     // DELETE --> change to baja logica capo
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id) {
-        try {
-            userService.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting user");
-        }
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        userService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
