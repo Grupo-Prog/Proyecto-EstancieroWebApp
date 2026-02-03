@@ -1,14 +1,11 @@
 package com.estanciero.api.services.impl;
 
-import com.estanciero.api.dtos.UserResponseDTO;
-import com.estanciero.api.mappers.UserMapper;
+import com.estanciero.api.factories.ColorProvider;
 import com.estanciero.api.models.entities.*;
 import com.estanciero.api.models.enums.BotDifficultyType;
-import com.estanciero.api.models.enums.ColorType;
 import com.estanciero.api.models.enums.GameStatusType;
 import com.estanciero.api.repositories.GameRepository;
 import com.estanciero.api.services.GameService;
-import com.estanciero.api.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +19,7 @@ import java.util.*;
 public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepository;
-    private final UserService userService;
-    private final UserMapper userMapper;
+    private final ColorProvider colorProvider;
 
 
     @Override
@@ -39,15 +35,10 @@ public class GameServiceImpl implements GameService {
             throw new IllegalStateException("requires at least 2 players");
         }
 
-        List<ColorType> colorsAvailable = new ArrayList<>(Arrays.asList(ColorType.values()));
-        Collections.shuffle(colorsAvailable);
+        // asigno colores random SOLO a los players o bots que no tengan colores seleccionados
+        colorProvider.assignRandomColors(game);
 
         for (Player player : game.getPlayers()) {
-            if (player.getColor() == null) {
-                ColorType color = colorsAvailable.get(0);
-                player.setColor(color);
-                colorsAvailable.remove(0);
-            }
             player.setCash(35000.0);
             player.setPosition(1);
         }
@@ -117,8 +108,6 @@ public class GameServiceImpl implements GameService {
         return winners??????
     }*/
 
-    /*private void <assignColors(List<Player> players)> {
-    }*/
 }
 
 

@@ -1,10 +1,12 @@
 package com.estanciero.api.controllers;
 
 
+import com.estanciero.api.dtos.AddColorRequestDTO;
 import com.estanciero.api.dtos.game.CreateGameDTO;
 import com.estanciero.api.dtos.game.JoinGameDto;
 import com.estanciero.api.models.entities.Game;
 import com.estanciero.api.models.enums.BotDifficultyType;
+import com.estanciero.api.models.enums.ColorType;
 import com.estanciero.api.services.GameService;
 import com.estanciero.api.services.LobbyService;
 import jakarta.validation.Valid;
@@ -76,4 +78,21 @@ public class GameController {
         Game game = gameService.removeBot(gameId, botId);
         return ResponseEntity.ok(game);
     }
+
+
+    @PostMapping("/{gameId}/addColor")
+    public ResponseEntity<Game> addColor(@PathVariable Long gameId,
+                                         @RequestBody AddColorRequestDTO request) {
+
+        Game game = lobbyService.addColor(gameId, request.getPlayerId(), request.getColor());
+        return ResponseEntity.ok(game);
+    }
+
+
+    @GetMapping("/{gameId}/colors")
+    public ResponseEntity<List<ColorType>> getAvailableColors(@PathVariable Long gameId) {
+        List<ColorType> colors = lobbyService.findAvailableColors(gameId);
+        return ResponseEntity.ok(colors);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.estanciero.api.dtos;
 
 import com.estanciero.api.models.enums.BotDifficultyType;
+import com.estanciero.api.models.enums.ColorType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,9 @@ public class PlayerResponseDTO {
 
     private Long id;
 
-    private String color;
+    private String name;
+
+    private ColorType color;
 
     private Double cash;
 
@@ -23,8 +26,6 @@ public class PlayerResponseDTO {
     private String playerType;
 
     private Long userId;
-
-    private String name;
 
     private BotDifficultyType difficulty;
 }

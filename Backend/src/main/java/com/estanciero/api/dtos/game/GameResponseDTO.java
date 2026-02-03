@@ -2,6 +2,7 @@ package com.estanciero.api.dtos.game;
 
 import com.estanciero.api.dtos.BoardResponseDTO;
 import com.estanciero.api.dtos.PlayerResponseDTO;
+import com.estanciero.api.models.enums.ColorType;
 import com.estanciero.api.models.enums.GameStatusType;
 import lombok.*;
 
@@ -22,4 +23,6 @@ public class GameResponseDTO {
     private BoardResponseDTO board;
 
     private GameStatusType status;
+
+    private List<ColorType> availableColors;
 }

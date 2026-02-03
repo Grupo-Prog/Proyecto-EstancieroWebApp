@@ -70,4 +70,16 @@ public class Game {
             throw new UserAlreadyJoined(userName);
         }
     }
+
+    /**
+     * Metodo creado para verificar que un player existe en un game
+     * @param playerId Player que se busca
+     */
+    public Player findPlayerOrThrow(Long playerId) {
+        return this.players.stream()
+                .filter(p -> p.getId().equals(playerId))
+                .findFirst()
+                .orElseThrow(()
+                        -> new IllegalArgumentException("player not found in this game"));
+    }
 }
