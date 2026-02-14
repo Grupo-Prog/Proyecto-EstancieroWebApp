@@ -3,7 +3,9 @@ package com.estanciero.api.controllers;
 
 import com.estanciero.api.dtos.AddColorRequestDTO;
 import com.estanciero.api.dtos.game.CreateGameDTO;
+import com.estanciero.api.dtos.game.GameResponseDTO;
 import com.estanciero.api.dtos.game.JoinGameDto;
+import com.estanciero.api.mappers.GameMapper;
 import com.estanciero.api.models.entities.Game;
 import com.estanciero.api.models.enums.BotDifficultyType;
 import com.estanciero.api.models.enums.ColorType;
@@ -25,6 +27,8 @@ import java.util.NoSuchElementException;
 public class GameController {
     private final GameService gameService;
     private final LobbyService lobbyService;
+    private final GameMapper gameMapper;
+
 
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
@@ -32,11 +36,10 @@ public class GameController {
     }
 
     @GetMapping("/{gameId}")
-    public ResponseEntity<Game> getGame(@PathVariable Long gameId) {
-        Game game = gameService.findById(gameId).orElseThrow(()
-                -> new NoSuchElementException("Game ID not found: " + gameId));
-        return ResponseEntity.ok(game);
+    public ResponseEntity<GameResponseDTO> getGame(@PathVariable Long gameId) {
+        return ResponseEntity.ok(lobbyService.getGame(gameId));
     }
+
 
     @PostMapping
     public ResponseEntity<Game> createGame(@Valid @RequestBody CreateGameDTO request) {
@@ -46,10 +49,10 @@ public class GameController {
     }
 
     @PostMapping("/{gameId}/start")
-    public ResponseEntity<Game> startGame(@PathVariable Long gameId) {
-        Game game = gameService.startGame(gameId);
-        return ResponseEntity.ok(game);
+    public ResponseEntity<GameResponseDTO> startGame(@PathVariable Long gameId) {
+        return ResponseEntity.ok(gameService.startGame(gameId));
     }
+
 
     @PostMapping("/{gameId}/join")
     public ResponseEntity<Game> joinGame(@PathVariable Long gameId,

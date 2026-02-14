@@ -20,6 +20,7 @@ import java.util.List;
 @SuperBuilder
 @DiscriminatorColumn(name = "PLAYER_TYPE", discriminatorType = DiscriminatorType.STRING)
 @ToString(onlyExplicitlyIncluded = true)
+@Data
 public abstract class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

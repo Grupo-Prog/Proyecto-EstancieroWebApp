@@ -1,5 +1,6 @@
 package com.estanciero.api.services;
 
+import com.estanciero.api.dtos.game.GameResponseDTO;
 import com.estanciero.api.models.entities.Game;
 import com.estanciero.api.models.enums.BotDifficultyType;
 
@@ -10,7 +11,7 @@ public interface GameService {
 
 
 
-    Game startGame(Long gameId);
+    GameResponseDTO startGame(Long gameId);
 
 
 

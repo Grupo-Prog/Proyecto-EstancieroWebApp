@@ -1,8 +1,10 @@
 package com.estanciero.api.services.impl;
 
+import com.estanciero.api.dtos.game.GameResponseDTO;
 import com.estanciero.api.factories.ColorProvider;
 import com.estanciero.api.factories.GameFactory;
 import com.estanciero.api.factories.PlayerFactory;
+import com.estanciero.api.mappers.GameMapper;
 import com.estanciero.api.models.entities.Game;
 import com.estanciero.api.models.entities.Player;
 import com.estanciero.api.models.entities.User;
@@ -22,6 +24,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -34,6 +37,7 @@ public class LobbyServiceImpl implements LobbyService {
     private final GameFactory gameFactory;
     private final PlayerFactory playerFactory;
     private final ColorProvider colorProvider;
+    private final GameMapper gameMapper;
 
     @Override
     public Game createGame(Long userId) {
@@ -85,6 +89,23 @@ public class LobbyServiceImpl implements LobbyService {
 
         return gameRepository.save(game);
     }
+
+    public GameResponseDTO getGame(Long gameId) {
+        Game game = gameRepository.findById(gameId).orElseThrow();
+
+        List<ColorType> availableColors = null;
+
+        if (game.getStatusType() == GameStatusType.LOBBY) {
+            availableColors = findAvailableColors(gameId);
+        }
+
+        return gameMapper.toResponseDTO(game, availableColors);
+    }
+
+
+
+
+
 
 
 

@@ -1,6 +1,5 @@
 package com.estanciero.api.dtos;
 
-import com.estanciero.api.models.entities.boxes.Box;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BoardResponseDTO {
+public class BoxResponseDTO {
 
-    private Long id;
-    private List<BoxResponseDTO> boxes;
+    private String name;
+    private Integer position;
+    private String type;
 }

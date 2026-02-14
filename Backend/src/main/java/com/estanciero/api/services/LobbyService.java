@@ -1,5 +1,6 @@
 package com.estanciero.api.services;
 
+import com.estanciero.api.dtos.game.GameResponseDTO;
 import com.estanciero.api.models.entities.Game;
 import com.estanciero.api.models.enums.ColorType;
 
@@ -10,4 +11,5 @@ public interface LobbyService {
     Game joinGame(Long gameId, Long userId);
     List<ColorType> findAvailableColors(Long gameId);
     Game addColor(Long gameId, Long playerId, ColorType color);
+    GameResponseDTO getGame(Long gameId);
 }
