@@ -15,6 +15,7 @@ import com.estanciero.api.repositories.BoardRepository;
 import com.estanciero.api.repositories.BoxRepository;
 import com.estanciero.api.repositories.GameRepository;
 import com.estanciero.api.services.GameService;
+import com.estanciero.api.services.TurnService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ public class GameServiceImpl implements GameService {
     private final GameMapper gameMapper;
     private final BotFactory botFactory;
     private final BotNameProvider botNameProvider;
+    private final TurnService turnService;
 
 
     @Override
@@ -61,10 +63,14 @@ public class GameServiceImpl implements GameService {
         Board board = createBoard(game);
         game.setBoard(board);
 
+        // devuelvo la lista de players ordenada para los turnos
+        List<Player> playerTurnOrder = turnService.randomTurnOrder(game.getPlayers());
 
-        // Determine first player
-        /*Player firstPlayer = determineFirstPlayer(game.getPlayers());?? */
+        // obtengo el primer player de la lista de turnos
+        Player firstPlayer = turnService.firstPlayer(playerTurnOrder);
 
+        // seteo el jugador con el primer turno
+        game.setCurrentTurnPlayerId(firstPlayer.getId());
 
         // change state
         game.setStatusType(GameStatusType.PLAYING);

@@ -9,11 +9,7 @@ import java.util.Optional;
 
 public interface GameService {
 
-
-
     GameResponseDTO startGame(Long gameId);
-
-
 
     Game addBot(Long gameId, BotDifficultyType botDifficultyTypes);
 

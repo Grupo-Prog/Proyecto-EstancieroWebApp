@@ -14,7 +14,7 @@ public class BotNameProvider {
     private static final List<String> NAMES_POOL = List.of("El_Capataz",
             "La_Yegua", "Pampero", "Gaucho_Gil", "Don_Segundo", "Martín_Fierro",
             "El_Hornero", "La_Vizcacha", "El_Comisario", "Doña_Petrona", "El_Pulpero",
-            "Franco", "Pibe_Gamer", "C0rta_La_B8", "Zarpado_Bot", "Re_Picante", "Manso_Bot",
+            "Mateo", "Pibe_Gamer", "C0rta_La_B8", "Zarpado_Bot", "Re_Picante", "Manso_Bot",
             "El_Mas_Capito", "Bot_Del_Ciber");
 
     private final Random random = new Random();
