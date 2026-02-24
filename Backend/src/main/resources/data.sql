@@ -48,57 +48,55 @@ INSERT INTO boxes (box_type, name, position, chacras_count, has_estancia, is_mor
 ('PROPERTY', 'Impuesto a las ventas', 42, NULL, NULL, NULL, 'TAXES', NULL, NULL, 2000, NULL, NULL);
 
 
--- CARDS
+-- CARDS:
+
+
+-- LUCK
 
 INSERT INTO cards (type, description, effect_type, amount, can_be_kept) VALUES
-('LUCK', 'Pagás $150 al banco', 'PAY_TO_BANK', 150, 0),
-('LUCK', 'Pagás multa al banco por $100', 'PAY_TO_BANK', 100, 0),
+('LUCK', 'Ganó en las carreras. Cobre $3000', 'RECEIVE_FROM_BANK', 3000, 0),
+('LUCK', 'Ha ganado la grande. Cobre $10.000', 'RECEIVE_FROM_BANK', 10000, 0),
+('LUCK', 'Cobre $1000 por intereses bancarios', 'RECEIVE_FROM_BANK', 1000, 0),
 
-('LUCK', 'El banco te paga un dividendo por $100', 'RECEIVE_FROM_BANK', 100,  0),
-('LUCK', 'Liquidas tu prestamo para construccion. Cobras $150', 'RECEIVE_FROM_BANK', 150,  0),
+('LUCK', 'Multa caminera. Pague $400', 'PAY_TO_BANK', 400, 0),
+('LUCK', 'Multa por exceso de velocidad. Pague $300', 'PAY_TO_BANK', 300, 0),
+('LUCK', 'Pague $3000 por gastos colegiales..', 'PAY_TO_BANK', 3000, 0),
+('LUCK', 'Por compra de semilla pague al banco $800 por cada chacra. $4000 por cada estancia', 'PAY_TO_BANK', null, 0),
+('LUCK', 'Sus propiedades tienen que ser reparadas. Pague al banco $500 por cada chacra y $2500 por cada estancia', 'PAY_TO_BANK', null, 0),
 
-('LUCK', 'Pagás $100 a cada jugador', 'PAY_TO_ALL_PLAYERS', 100,  0),
-('LUCK', 'Te han elegido presidente de la mesa directiva. Paga $50 a cada jugador', 'PAY_TO_ALL_PLAYERS', 50,  0),
+('LUCK', 'Siga hasta la salida', 'MOVE_TO_BOX',   1,  0),
+('LUCK', 'Siga hasta Buenos Aires, Zona norte', 'MOVE_TO_BOX',  41, 0),
+('LUCK', 'Haga un paseo hasta la Bodega. Si pasa por la salida cobre $5000', 'MOVE_TO_BOX',  5000, 0),
+('LUCK', 'Siga hasta Salta, Zona Norte. Si pasa por la salida cobre $5000', 'MOVE_TO_BOX',  5000, 0),
+('LUCK', 'Siga hasta Santa fe, Zona Norte. Si pasa por la salida cobre $5000', 'MOVE_TO_BOX',  5000, 0),
 
-('LUCK', 'Cobrás $100 de cada jugador', 'RECEIVE_FROM_ALL_PLAYERS', 100, 0),
-('LUCK', 'Cobrás $200 de cada jugador', 'RECEIVE_FROM_ALL_PLAYERS', 200, 0),
+('LUCK', 'Vuelve 3 pasos atrás', 'MOVE_X_AMOUNT', 3, 0),
 
-('LUCK', 'Marche preso', 'GO_TO_JAIL', 15,  0),
-('LUCK', 'Marche preso', 'GO_TO_JAIL', 15,  0),
+('LUCK', 'Marche preso directamente', 'GO_TO_JAIL', 15,  0),
+('LUCK', 'Habeas corpus concedido. Con esta tarjeta sale usted gratuitamente de la Comisaria. Consérvela o vendala', 'GET_OUT_OF_JAIL',  NULL, 1);
 
-('LUCK', 'Salís de la cárcel gratis. Puedes guardar esta carta', 'GET_OUT_OF_JAIL',  NULL, 1),
-('LUCK', 'Salís de la cárcel gratis. Puedes guardar esta carta', 'GET_OUT_OF_JAIL',  NULL, 1),
 
-('LUCK', 'Avanzás 3 casilleros', 'MOVE_X_AMOUNT',  3, 0),
-('LUCK', 'Retrocedés 3 casilleros', 'MOVE_X_AMOUNT', 3, 0),
-
-('LUCK', 'Avanzás hasta el Ferrocarril de San Martin', 'MOVE_TO_BOX',  19, 0),
-('LUCK', 'Avanzás hasta la salida', 'MOVE_TO_BOX',   1,  0);
-
+-- DESTINY
 
 INSERT INTO cards (type, description, effect_type, amount, can_be_kept) VALUES
-('DESTINY', 'Paga cuotas de hospital por $100', 'PAY_TO_BANK', 100,  0),
-('DESTINY', 'Cuotas medicas. Paga $50', 'PAY_TO_BANK', 50,  0),
+('DESTINY', 'Por venta de acciones, cobre $1000', 'RECEIVE_FROM_BANK', 1000,  0),
+('DESTINY', 'Ha ganado un concurso ganadero. Cobre $2000', 'RECEIVE_FROM_BANK', 2000,  0),
+('DESTINY', 'Herede $2000', 'RECEIVE_FROM_BANK', 2000,  0),
+('DESTINY', 'Devolución de impuesto. Cobre $400', 'RECEIVE_FROM_BANK', 400,  0),
+('DESTINY', 'Ha ganado un concurso agrícola. Cobre $2000', 'RECEIVE_FROM_BANK', 2000,  0),
+('DESTINY', 'Error en los cálculos del banco. Cobre $4000', 'RECEIVE_FROM_BANK', 4000,  0),
+('DESTINY', 'Ha obtenido un segundo premio de belleza. Cobre $200', 'RECEIVE_FROM_BANK', 200,  0),
+('DESTINY', '5% de interés sobre cédulas hipotecarias. Cobre $500', 'RECEIVE_FROM_BANK', 500,  0),
 
-('DESTINY', 'Recibes $120 por servicios de asesoria', 'RECEIVE_FROM_BANK', 120,  0),
-('DESTINY', 'Error bancario a tu favor. Cobra $200', 'RECEIVE_FROM_BANK', 200,  0),
+('DESTINY', 'Es su cumpleaños. Cobre $200 de cada uno de sus jugadores', 'RECEIVE_FROM_ALL_PLAYERS', 200,  0),
 
-('DESTINY', 'Pagás $100 a cada jugador', 'PAY_TO_ALL_PLAYERS', 100,  0),
-('DESTINY', 'Pagás $200 a cada jugador', 'PAY_TO_ALL_PLAYERS', 200,  0),
+('DESTINY', 'Siga hasta la salida', 'MOVE_TO_BOX', 1, 0),
+('DESTINY', 'Vuelve atrás hacia Formosa Zona Sur', 'MOVE_TO_BOX', 2, 0),
 
-('DESTINY', 'Es tu cumpleaños recibes $50 de cada jugador', 'RECEIVE_FROM_ALL_PLAYERS', 50,  0),
-('DESTINY', 'Es tu cumpleaños recibes $100 de cada jugador', 'RECEIVE_FROM_ALL_PLAYERS', 100,  0),
+('DESTINY', 'Gastos de farmacia. Pague $1000', 'PAY_TO_BANK', 1000,  0),
+('DESTINY', 'Pague su póliza de seguro con $1000', 'PAY_TO_BANK', 1000,  0),
+('DESTINY', 'Pague $200 de multa o levante una tarjeta de SUERTE', 'PAY_TO_BANK', 200,  0),
 
-('DESTINY', 'Marche preso', 'GO_TO_JAIL', 15, 0),
-('DESTINY', 'Marche preso', 'GO_TO_JAIL', 15, 0),
-
-('DESTINY', 'Salís de la cárcel gratis. Puedes guardar esta carta', 'GET_OUT_OF_JAIL', NULL, 1),
-('DESTINY', 'Salís de la cárcel gratis. Puedes guardar esta carta', 'GET_OUT_OF_JAIL', NULL, 1),
-
-('DESTINY', 'Avanzás 5 casilleros', 'MOVE_X_AMOUNT',  5, 0),
-('DESTINY', 'Retrocedés 3 casilleros', 'MOVE_X_AMOUNT',  3, 0 ),
-
-('DESTINY', 'Avanzás hasta la Provincia de Mendoza zona sur', 'MOVE_TO_BOX', 18,  0),
-('DESTINY', 'Avanzás hasta la salida', 'MOVE_TO_BOX', 1, 0);
-
+('DESTINY', 'Marche preso directamente', 'GO_TO_JAIL', 15,  0),
+('DESTINY', 'Con esta tarjeta sale usted de la Comisaria. Consérvela hasta utilizarla o venderla', 'GET_OUT_OF_JAIL',  NULL, 1);
 
