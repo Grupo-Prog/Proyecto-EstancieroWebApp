@@ -24,13 +24,14 @@ public class TurnServiceImpl implements TurnService {
     }
 
     @Override
-    public Player firstPlayer (List<Player> orderPlayers){
+    public List<Long> getPlayerIds(List<Player> players) {
+        List<Long> playersIds = new ArrayList<>();
 
-        Player player = randomTurnOrder(orderPlayers).get(0);
+        for (Player p : players) {
+            playersIds.add(p.getId());
+        }
 
-        return player;
+        return playersIds;
     }
-
-
 
 }

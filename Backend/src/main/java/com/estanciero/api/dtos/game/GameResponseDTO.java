@@ -18,7 +18,9 @@ public class GameResponseDTO {
 
     private List<PlayerResponseDTO> players;
 
-    private Long currentTurnPlayerId;
+    private List<Long> turnOrder;
+
+    private Integer currentTurnIndex;
 
     private BoardResponseDTO board;
 

@@ -28,7 +28,10 @@ public class Game {
     @Version
     private Long version;
 
-    private Long currentTurnPlayerId;
+    @ElementCollection
+    private List<Long> turnOrder;
+
+    private Integer currentTurnIndex;
 
     public static final Integer MAX_PLAYERS = 6;
 

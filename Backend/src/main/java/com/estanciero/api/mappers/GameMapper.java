@@ -21,7 +21,8 @@ public class GameMapper {
         return GameResponseDTO.builder()
                 .id(game.getId())
                 .status(game.getStatusType())
-                .currentTurnPlayerId(game.getCurrentTurnPlayerId())
+                .currentTurnIndex(game.getCurrentTurnIndex())
+                .turnOrder(game.getTurnOrder())
                 .players(
                         game.getPlayers()
                                 .stream()

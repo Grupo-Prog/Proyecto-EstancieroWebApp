@@ -59,20 +59,23 @@ public class GameServiceImpl implements GameService {
             player.setPosition(1);
         }
 
-        // create board
+        // creo el board
         Board board = createBoard(game);
         game.setBoard(board);
 
-        // devuelvo la lista de players ordenada para los turnos
+        // devuelvo la lista de players ordenada para los turnos (la tirada)
         List<Player> playerTurnOrder = turnService.randomTurnOrder(game.getPlayers());
 
-        // obtengo el primer player de la lista de turnos
-        Player firstPlayer = turnService.firstPlayer(playerTurnOrder);
+        // obtengo solo los IDs de esa lista
+        List<Long> turnOrderIds = turnService.getPlayerIds(playerTurnOrder);
+
+        // seteo esa lista de IDs
+        game.setTurnOrder(turnOrderIds);
 
         // seteo el jugador con el primer turno
-        game.setCurrentTurnPlayerId(firstPlayer.getId());
+        game.setCurrentTurnIndex(0);
 
-        // change state
+        // seteo cambio d estado
         game.setStatusType(GameStatusType.PLAYING);
 
 
