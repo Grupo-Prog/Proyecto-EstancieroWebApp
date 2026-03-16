@@ -6,25 +6,17 @@ import com.estanciero.api.factories.GameFactory;
 import com.estanciero.api.factories.PlayerFactory;
 import com.estanciero.api.mappers.GameMapper;
 import com.estanciero.api.models.entities.Game;
-import com.estanciero.api.models.entities.Player;
 import com.estanciero.api.models.entities.User;
-
-
 import com.estanciero.api.models.enums.ColorType;
 import com.estanciero.api.models.enums.GameStatusType;
 import com.estanciero.api.repositories.GameRepository;
 import com.estanciero.api.repositories.UserRepository;
 import com.estanciero.api.services.LobbyService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 @Service
@@ -101,15 +93,6 @@ public class LobbyServiceImpl implements LobbyService {
 
         return gameMapper.toResponseDTO(game, availableColors);
     }
-
-
-
-
-
-
-
-
-
 
 
 }
