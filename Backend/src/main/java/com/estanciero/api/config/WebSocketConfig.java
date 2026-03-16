@@ -20,7 +20,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // el servidor envía eventos asi: /topic/game-started
         config.enableSimpleBroker("/topic");
 
-        // Los mensajes/eventos que se envian al servidor empiezan con /app
+        // Los mensajes/eventos que se envían al servidor empiezan con /app
         // ej: app/roll-dice
         config.setApplicationDestinationPrefixes("/app");
     }
