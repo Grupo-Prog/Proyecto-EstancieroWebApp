@@ -1,8 +1,8 @@
 package com.estanciero.api.controllers;
-import com.estanciero.api.dtos.UserCreateRequestDTO;
-import com.estanciero.api.dtos.UserLoginRequestDTO;
-import com.estanciero.api.dtos.UserResponseDTO;
-import com.estanciero.api.dtos.UserUpdateRequestDTO;
+import com.estanciero.api.dtos.user.UserCreateRequestDTO;
+import com.estanciero.api.dtos.user.UserLoginRequestDTO;
+import com.estanciero.api.dtos.user.UserResponseDTO;
+import com.estanciero.api.dtos.user.UserUpdateRequestDTO;
 import com.estanciero.api.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")

@@ -1,9 +1,8 @@
 package com.estanciero.api.services;
 
-import com.estanciero.api.dtos.UserCreateRequestDTO;
-import com.estanciero.api.dtos.UserResponseDTO;
-import com.estanciero.api.dtos.UserUpdateRequestDTO;
-import com.estanciero.api.models.enums.UserStatusType;
+import com.estanciero.api.dtos.user.UserCreateRequestDTO;
+import com.estanciero.api.dtos.user.UserResponseDTO;
+import com.estanciero.api.dtos.user.UserUpdateRequestDTO;
 
 import java.util.List;
 import java.util.Optional;
