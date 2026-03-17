@@ -11,5 +11,7 @@ public enum CardEffectType {
     // mover hacia x chacra
     MOVE_TO_BOX,
     // mover x casillas para adelante o para atras
-    MOVE_X_AMOUNT
+    MOVE_X_AMOUNT,
+    //levantar una carta suerte
+    PICK_UP_A_LUCKY_CARD
 }

@@ -1,6 +1,6 @@
 package com.estanciero.api.models.entities;
 
-import com.estanciero.api.models.enums.CardEffectType;
+
 import com.estanciero.api.models.enums.CardType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -28,11 +31,9 @@ public class Card {
 
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private CardEffectType effectType;
-
-    // plata, mover x cantidad de casillas, ir hacia box_id
-    private Integer amount;
+    // 1 Card --> N Effects
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CardEffect> effects = new ArrayList<>();
 
     //boolean para guardar la card
     @Column(name = "can_be_kept")
