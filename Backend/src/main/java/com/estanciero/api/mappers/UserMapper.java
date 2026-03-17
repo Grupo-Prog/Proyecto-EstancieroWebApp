@@ -1,8 +1,8 @@
 package com.estanciero.api.mappers;
 
-import com.estanciero.api.dtos.UserCreateRequestDTO;
-import com.estanciero.api.dtos.UserResponseDTO;
-import com.estanciero.api.dtos.UserUpdateRequestDTO;
+import com.estanciero.api.dtos.user.UserCreateRequestDTO;
+import com.estanciero.api.dtos.user.UserResponseDTO;
+import com.estanciero.api.dtos.user.UserUpdateRequestDTO;
 import com.estanciero.api.models.entities.User;
 import org.springframework.stereotype.Component;
 

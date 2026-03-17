@@ -1,4 +1,4 @@
-package com.estanciero.api.dtos;
+package com.estanciero.api.dtos.user;
 
 
 import lombok.AllArgsConstructor;
