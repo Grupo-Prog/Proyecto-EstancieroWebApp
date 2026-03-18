@@ -1,5 +1,6 @@
 package com.estanciero.api.models.entities;
 
+import com.estanciero.api.models.enums.CardEffectType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,4 +29,8 @@ public class CardEffect {
 
     // levantar x plata
     private Double cash;
+
+    // efectos posibles
+    @Enumerated(EnumType.STRING)
+    private CardEffectType effectType;
 }
