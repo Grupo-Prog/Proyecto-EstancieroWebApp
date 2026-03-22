@@ -56,7 +56,7 @@ public class GameServiceImpl implements GameService {
 
         for (Player player : game.getPlayers()) {
             player.setCash(35000.0);
-            player.setPosition(1);
+            player.setPosition(0);
         }
 
         // creo el board
