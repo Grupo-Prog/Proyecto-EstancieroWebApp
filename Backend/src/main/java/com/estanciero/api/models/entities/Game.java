@@ -28,9 +28,11 @@ public class Game {
     @Version
     private Long version;
 
+    //Lista SOLO de IDs en el orden en el que van a jugar en el game
     @ElementCollection
     private List<Long> turnOrder;
 
+    //Indice del player actual dentro de TurnOrder
     private Integer currentTurnIndex;
 
     public static final Integer MAX_PLAYERS = 6;
@@ -84,5 +86,20 @@ public class Game {
                 .findFirst()
                 .orElseThrow(()
                         -> new IllegalArgumentException("player not found in this game"));
+    }
+
+
+    /**
+     * Metodo creado para avanzar un turno al siguiente.
+     */
+    public void nextTurn() {
+
+        // turno actual + 1
+        this.currentTurnIndex = this.currentTurnIndex + 1;
+
+        // si el turno supera la cantidad d elementos del array entonces vuelve al indice 0
+        if (this.currentTurnIndex >= this.turnOrder.size()) {
+            this.currentTurnIndex = 0;
+        }
     }
 }
